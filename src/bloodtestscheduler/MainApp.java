@@ -8,7 +8,7 @@ package bloodtestscheduler;
  *
  * @author Josh
  */
-public class BloodTestScheduler {
+public class MainApp {
 
     /**
      * @param args the command line arguments
