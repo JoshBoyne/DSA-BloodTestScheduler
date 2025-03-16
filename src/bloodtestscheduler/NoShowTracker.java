@@ -3,10 +3,49 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package bloodtestscheduler;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Stack;
+
 /**
  *
  * @author Josh
  */
-public class NoShowTracker {
-  
+
+public class NoShowTracker implements StackADT<Person> {
+    private Stack<Person> stack;
+    private static final int MAX_NO_SHOWS = 5;
+
+    public NoShowTracker() {
+        stack = new Stack<>();
+    }
+
+    @Override
+    public void push(Person item) {
+        if (stack.size() >= MAX_NO_SHOWS) {
+            stack.remove(0); // removes the oldest no show
+        }
+        stack.push(item);
+    }
+
+    @Override
+    public Person pop() {
+        return stack.pop();
+    }
+
+    @Override
+    public Person peek() {
+        return stack.peek();
+    }
+
+    @Override
+    public boolean isEmpty() {
+        return stack.isEmpty();
+    }
+
+    //returns all the no shows
+    public List<Person> getAllNoShows() {
+        return new ArrayList<>(stack);
+    }
 }

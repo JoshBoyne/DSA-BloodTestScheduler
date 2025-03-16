@@ -8,6 +8,34 @@ package bloodtestscheduler;
  *
  * @author Josh
  */
-public class GPRegistry {
-    
+import java.util.LinkedList;
+
+public class GPRegistry implements DLLADT<String> {
+    private LinkedList<String> gpList;
+
+    public GPRegistry() {
+        gpList = new LinkedList<>();
+    }
+
+    @Override
+    public void add(String item) {
+        gpList.add(item);
+    }
+
+    @Override
+    public void remove(String item) {
+        gpList.remove(item);
+    }
+
+    @Override
+    public String get(int index) {
+        return gpList.get(index);
+    }
+
+    @Override
+    public void display() {
+        for (String gp : gpList) {
+            System.out.println(gp);
+        }
+    }
 }

@@ -9,19 +9,20 @@ package bloodtestscheduler;
  * @author Josh
  */
 public class Person {
-    
     private String name;
     private int age;
     private String priority;
     private String gpDetails;
     private boolean fromHospital;
+    private boolean noShow;
 
-    public Person(String name, int age, String priority, String gpDetails, boolean fromHospital) {
+    public Person(String name, int age, String priority, String gpDetails, boolean fromHospital, boolean noShow) {
         this.name = name;
         this.age = age;
         this.priority = priority;
         this.gpDetails = gpDetails;
         this.fromHospital = fromHospital;
+        this.noShow = noShow;
     }
 
     public String getName() {
@@ -64,11 +65,35 @@ public class Person {
         this.fromHospital = fromHospital;
     }
 
-    @Override
-    public String toString() {
-        return "Person{" + "name=" + name + ", age=" + age + ", priority=" + priority + ", gpDetails=" + gpDetails + ", fromHospital=" + fromHospital + '}';
+    public boolean isNoShow() {
+        return noShow;
     }
-    
-    
+
+    public void setNoShow(boolean noShow) {
+        this.noShow = noShow;
+    }
+
+    //switch case that gets the priority level as an int
+    public int getPriorityLevel() {
+        switch (priority) {
+            case "Urgent":
+                return 3; // highest priority
+            case "Medium":
+                return 2;
+            case "Low":
+                return 1; // lowest priority
+            default:
+                return 0; 
+        }
+    }
+
+    @Override
+public String toString() {
+    return "Name = " + name + 
+           ", Age = " + age + 
+           ", Priority = " + priority + 
+           ", No-Show = " + (noShow ? "Yes" : "No");
+}
+
     
 }

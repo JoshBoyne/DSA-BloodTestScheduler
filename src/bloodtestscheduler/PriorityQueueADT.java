@@ -8,10 +8,9 @@ package bloodtestscheduler;
  *
  * @author Josh
  */
-public interface PriorityQueueADT<T>{
-    
-    void enqueue(T item);
-    T dequeue();
-    T peek();
-    boolean isEmpty();
+public interface PriorityQueueADT<T> {
+    void enqueue(T item); //adds into queue
+    T dequeue(); //removes and returns the highest priority from the queue
+    T peek(); //returns the highest priority without removing it 
+    boolean isEmpty(); //checks if the queue is empty
 }

@@ -4,18 +4,41 @@
  */
 package bloodtestscheduler;
 
+import bloodtestscheduler.Person;
+import java.util.List;
+import java.util.PriorityQueue;
+import javax.swing.JOptionPane;
+import javax.swing.*;
+
 /**
  *
  * @author Josh
  */
 public class BloodTestSchedulerGUI extends javax.swing.JFrame {
 
-    /**
-     * Creates new form BloodTestSchedulerGUI
-     */
-    public BloodTestSchedulerGUI() {
+    private PatientQueue pQueue;
+    private NoShowTracker noShowTracker;
+    private GPRegistry gpRegistry;
+    
+    
+    public BloodTestSchedulerGUI(PatientQueue pQueue, NoShowTracker noShowTracker, GPRegistry gpRegistry) {
         initComponents();
+        this.pQueue = pQueue;
+        this.noShowTracker = noShowTracker;
+        this.gpRegistry = gpRegistry;
+        
+        displayNoShowPatients();
+        
     }
+    
+    //display no show patients in NoShowTA
+    private void displayNoShowPatients() {
+        noShowTA.setText(""); // Clear the text area
+        for (Person noShow : noShowTracker.getAllNoShows()) {
+            noShowTA.append(noShow.toString() + "\n");
+        }
+    }
+    
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -84,6 +107,11 @@ public class BloodTestSchedulerGUI extends javax.swing.JFrame {
         prioLevelCB.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Urgent", "Medium", "Low" }));
 
         addPatientBTN.setText("Add Patient");
+        addPatientBTN.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addPatientBTNActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout NewPatientPanelLayout = new javax.swing.GroupLayout(NewPatientPanel);
         NewPatientPanel.setLayout(NewPatientPanelLayout);
@@ -150,10 +178,25 @@ public class BloodTestSchedulerGUI extends javax.swing.JFrame {
         jScrollPane1.setViewportView(currQueueTA);
 
         nextPatientBTN.setText("Next Patient");
+        nextPatientBTN.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                nextPatientBTNActionPerformed(evt);
+            }
+        });
 
         noShowBTN.setText("No-Show");
+        noShowBTN.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                noShowBTNActionPerformed(evt);
+            }
+        });
 
         viewAllBTN.setText("View All Patients");
+        viewAllBTN.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                viewAllBTNActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout PatientQueuePanelLayout = new javax.swing.GroupLayout(PatientQueuePanel);
         PatientQueuePanel.setLayout(PatientQueuePanelLayout);
@@ -193,6 +236,11 @@ public class BloodTestSchedulerGUI extends javax.swing.JFrame {
         jScrollPane2.setViewportView(noShowTA);
 
         refreshBTN.setText("Refresh");
+        refreshBTN.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                refreshBTNActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout NoShowPanelLayout = new javax.swing.GroupLayout(NoShowPanel);
         NoShowPanel.setLayout(NoShowPanelLayout);
@@ -258,6 +306,92 @@ public class BloodTestSchedulerGUI extends javax.swing.JFrame {
     private void nameTFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nameTFActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_nameTFActionPerformed
+
+    private void viewAllBTNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewAllBTNActionPerformed
+        
+    currQueueTA.setText("");
+
+    // gets all the patients from the queue
+    List<Person> patients = pQueue.getAllPatients();
+
+    //goes through the list and shows patient details
+    for (Person patient : patients) {
+        currQueueTA.append(patient.toString() + "\n");
+    }
+    }//GEN-LAST:event_viewAllBTNActionPerformed
+
+    private void nextPatientBTNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nextPatientBTNActionPerformed
+        // TODO add your handling code here:
+            Person nextPatient = pQueue.dequeue();
+            if (nextPatient != null) {
+                currQueueTA.setText("Next Patient: " + nextPatient);
+            } else {
+                currQueueTA.setText("No patients in queue.");
+            }
+    }//GEN-LAST:event_nextPatientBTNActionPerformed
+
+    private void noShowBTNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_noShowBTNActionPerformed
+        // TODO add your handling code here:
+         Person nextPatient = pQueue.dequeue();
+                if (nextPatient != null) {
+                    noShowTracker.push(nextPatient);
+                    noShowTA.setText("");
+                    for (Person noShow : noShowTracker.getAllNoShows()) {
+                        noShowTA.append(noShow.toString() + "\n");
+                    }
+                }
+    }//GEN-LAST:event_noShowBTNActionPerformed
+
+    private void refreshBTNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refreshBTNActionPerformed
+        // TODO add your handling code here:
+        noShowTA.setText(""); // Clear the no-show text area
+        for (Person noShow : noShowTracker.getAllNoShows()) {
+            noShowTA.append(noShow.toString() + "\n"); // Display no-shows
+        }
+    }//GEN-LAST:event_refreshBTNActionPerformed
+
+    private void addPatientBTNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addPatientBTNActionPerformed
+        // TODO add your handling code here:
+         try {
+            
+            String name = nameTF.getText();
+            int age = Integer.parseInt(ageTF.getText());
+            String priority = (String) prioLevelCB.getSelectedItem();
+            String gpDetails = gpDetailsTF.getText();
+            boolean fromHospital = hosYesRB.isSelected();
+            boolean noShow = false; 
+
+            
+            if (name.isEmpty() || gpDetails.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Please fill in all fields.", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            // new person obj
+            Person newPatient = new Person(name, age, priority, gpDetails, fromHospital, noShow);
+
+            // adds patient to queue
+            pQueue.enqueue(newPatient);
+
+            // clear fields
+            nameTF.setText("");
+            ageTF.setText("");
+            gpDetailsTF.setText("");
+            hosYesRB.setSelected(false);
+            hosNoRB.setSelected(false);
+
+            // success message
+            JOptionPane.showMessageDialog(this, "Patient added successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
+
+            //updates current queue display
+            currQueueTA.setText("");
+            for (Person patient : pQueue.getAllPatients()) {
+                currQueueTA.append(patient.toString() + "\n");
+            }
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Please enter a valid age.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_addPatientBTNActionPerformed
 
     
 

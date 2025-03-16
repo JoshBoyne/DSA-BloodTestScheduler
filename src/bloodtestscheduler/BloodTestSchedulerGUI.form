@@ -244,6 +244,9 @@
               <Properties>
                 <Property name="text" type="java.lang.String" value="Add Patient"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="addPatientBTNActionPerformed"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>
@@ -319,16 +322,25 @@
               <Properties>
                 <Property name="text" type="java.lang.String" value="Next Patient"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="nextPatientBTNActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JButton" name="noShowBTN">
               <Properties>
                 <Property name="text" type="java.lang.String" value="No-Show"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="noShowBTNActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JButton" name="viewAllBTN">
               <Properties>
                 <Property name="text" type="java.lang.String" value="View All Patients"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="viewAllBTNActionPerformed"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>
@@ -396,6 +408,9 @@
               <Properties>
                 <Property name="text" type="java.lang.String" value="Refresh"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="refreshBTNActionPerformed"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>

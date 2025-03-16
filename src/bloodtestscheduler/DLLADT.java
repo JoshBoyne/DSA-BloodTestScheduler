@@ -9,10 +9,8 @@ package bloodtestscheduler;
  * @author Josh
  */
 public interface DLLADT<T> {
-    
-    void add(T item);
-    void remove(T item);
-    T get(T item);
-    void display();
-
+    void add(T item);//adds item to the list
+    void remove(T item);  //removes items from list
+    T get(int index); //gets the item from a certain index
+    void display(); //displays all the items 
 }
