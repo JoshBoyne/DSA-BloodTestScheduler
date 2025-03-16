@@ -9,5 +9,5 @@ package bloodtestscheduler;
  * @author Josh
  */
 public class PatientList {
-    
+   
 }

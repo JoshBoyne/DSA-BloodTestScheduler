@@ -23,14 +23,52 @@ public class Person {
         this.gpDetails = gpDetails;
         this.fromHospital = fromHospital;
     }
-    
-    public String getPriority(){
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
+
+    public String getPriority() {
         return priority;
+    }
+
+    public void setPriority(String priority) {
+        this.priority = priority;
+    }
+
+    public String getGpDetails() {
+        return gpDetails;
+    }
+
+    public void setGpDetails(String gpDetails) {
+        this.gpDetails = gpDetails;
+    }
+
+    public boolean isFromHospital() {
+        return fromHospital;
+    }
+
+    public void setFromHospital(boolean fromHospital) {
+        this.fromHospital = fromHospital;
     }
 
     @Override
     public String toString() {
         return "Person{" + "name=" + name + ", age=" + age + ", priority=" + priority + ", gpDetails=" + gpDetails + ", fromHospital=" + fromHospital + '}';
     }
+    
+    
     
 }
