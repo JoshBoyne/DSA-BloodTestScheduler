@@ -3,17 +3,15 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package bloodtestscheduler;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.PriorityQueue;
-/**
- *
- * @author Josh
- */
 import java.util.Comparator;
 import java.util.PriorityQueue;
 import java.util.List;
 import java.util.ArrayList;
+/**
+ *
+ * @author Josh
+ */
+
 
 public class PatientQueue implements PriorityQueueADT<Person> {
     private PriorityQueue<Person> queue;
@@ -57,4 +55,9 @@ public class PatientQueue implements PriorityQueueADT<Person> {
         }
         return patientList;
     }
-}
+    
+    // Method to remove a specific patient from the queue
+    public void remove(Person patient) {
+        queue.remove(patient);
+    }
+}               

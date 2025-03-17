@@ -19,7 +19,7 @@ public class BloodTestSchedulerGUI extends javax.swing.JFrame {
     private PatientQueue pQueue;
     private NoShowTracker noShowTracker;
     private GPRegistry gpRegistry;
-    
+    private Person currentPatient;
     
     public BloodTestSchedulerGUI(PatientQueue pQueue, NoShowTracker noShowTracker, GPRegistry gpRegistry) {
         initComponents();
@@ -28,6 +28,8 @@ public class BloodTestSchedulerGUI extends javax.swing.JFrame {
         this.gpRegistry = gpRegistry;
         
         displayNoShowPatients();
+        refreshQueue();
+        
         
     }
     
@@ -36,6 +38,25 @@ public class BloodTestSchedulerGUI extends javax.swing.JFrame {
         noShowTA.setText(""); // Clear the text area
         for (Person noShow : noShowTracker.getAllNoShows()) {
             noShowTA.append(noShow.toString() + "\n");
+        }
+    }
+    
+    // Method to refresh the queue text area
+    private void refreshQueue() {
+        queueTA.setText(""); // Clear the text area
+        for (Person patient : pQueue.getAllPatients()) {
+            queueTA.append(patient.getName() + "\n"); // Display patient names
+        }
+    }
+    
+    // Method to display the next patient in the queue
+    private void showNextPatient() {
+        currentPatient = pQueue.dequeue(); // Remove the first patient from the queue
+        if (currentPatient != null) {
+            currQueueTA.setText(currentPatient.toString()); // Display detailed info of the next patient
+            refreshQueue(); // Refresh the queue text area
+        } else {
+            currQueueTA.setText("No patients in queue.");
         }
     }
     
@@ -65,6 +86,9 @@ public class BloodTestSchedulerGUI extends javax.swing.JFrame {
         nextPatientBTN = new javax.swing.JButton();
         noShowBTN = new javax.swing.JButton();
         viewAllBTN = new javax.swing.JButton();
+        firstPatientBTN = new javax.swing.JButton();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        queueTA = new javax.swing.JTextArea();
         NoShowPanel = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         noShowTA = new javax.swing.JTextArea();
@@ -198,16 +222,34 @@ public class BloodTestSchedulerGUI extends javax.swing.JFrame {
             }
         });
 
+        firstPatientBTN.setText("First Patient");
+        firstPatientBTN.setMaximumSize(new java.awt.Dimension(118, 23));
+        firstPatientBTN.setMinimumSize(new java.awt.Dimension(118, 23));
+        firstPatientBTN.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                firstPatientBTNActionPerformed(evt);
+            }
+        });
+
+        queueTA.setColumns(20);
+        queueTA.setRows(5);
+        jScrollPane3.setViewportView(queueTA);
+
         javax.swing.GroupLayout PatientQueuePanelLayout = new javax.swing.GroupLayout(PatientQueuePanel);
         PatientQueuePanel.setLayout(PatientQueuePanelLayout);
         PatientQueuePanelLayout.setHorizontalGroup(
             PatientQueuePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(PatientQueuePanelLayout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PatientQueuePanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(PatientQueuePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PatientQueuePanelLayout.createSequentialGroup()
-                        .addGap(0, 359, Short.MAX_VALUE)
+                .addGroup(PatientQueuePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(PatientQueuePanelLayout.createSequentialGroup()
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 235, Short.MAX_VALUE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 450, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(PatientQueuePanelLayout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(firstPatientBTN, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
                         .addComponent(viewAllBTN)
                         .addGap(18, 18, 18)
                         .addComponent(nextPatientBTN, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -219,12 +261,15 @@ public class BloodTestSchedulerGUI extends javax.swing.JFrame {
             PatientQueuePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(PatientQueuePanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 146, Short.MAX_VALUE)
+                .addGroup(PatientQueuePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 146, Short.MAX_VALUE)
+                    .addComponent(jScrollPane3))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(PatientQueuePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(viewAllBTN)
                     .addComponent(nextPatientBTN)
-                    .addComponent(noShowBTN))
+                    .addComponent(noShowBTN)
+                    .addComponent(firstPatientBTN, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
@@ -275,7 +320,7 @@ public class BloodTestSchedulerGUI extends javax.swing.JFrame {
                     .addComponent(NewPatientPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(PatientQueuePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(NoShowPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(23, Short.MAX_VALUE))
+                .addContainerGap(69, Short.MAX_VALUE))
         );
         MainPanelLayout.setVerticalGroup(
             MainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -322,24 +367,33 @@ public class BloodTestSchedulerGUI extends javax.swing.JFrame {
 
     private void nextPatientBTNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nextPatientBTNActionPerformed
         // TODO add your handling code here:
-            Person nextPatient = pQueue.dequeue();
-            if (nextPatient != null) {
-                currQueueTA.setText("Next Patient: " + nextPatient);
+        currentPatient = pQueue.dequeue(); // Remove the first patient from the queue
+            if (currentPatient != null) {
+                currQueueTA.setText(currentPatient.toString()); // Display detailed info of the next patient
+                refreshQueue(); // Refresh the queue text area
             } else {
                 currQueueTA.setText("No patients in queue.");
-            }
+    }
     }//GEN-LAST:event_nextPatientBTNActionPerformed
 
     private void noShowBTNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_noShowBTNActionPerformed
-        // TODO add your handling code here:
-         Person nextPatient = pQueue.dequeue();
-                if (nextPatient != null) {
-                    noShowTracker.push(nextPatient);
-                    noShowTA.setText("");
-                    for (Person noShow : noShowTracker.getAllNoShows()) {
-                        noShowTA.append(noShow.toString() + "\n");
-                    }
-                }
+        if (currentPatient != null) {
+        // Remove the current patient from the queue
+        pQueue.remove(currentPatient); // Ensure this method is implemented in PatientQueue
+        noShowTracker.push(currentPatient); // Add the patient to the no-show tracker
+
+        // Refresh the no-show text area
+        noShowTA.setText(""); // Clear the no-show text area
+        for (Person noShow : noShowTracker.getAllNoShows()) {
+            noShowTA.append(noShow.toString() + "\n"); // Display no-show patients
+        }
+
+        // Refresh the queue and current queue display
+        refreshQueue();
+        showNextPatient(); // Display the next patient in the queue
+        } else {
+        JOptionPane.showMessageDialog(this, "No patient to mark as no-show.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_noShowBTNActionPerformed
 
     private void refreshBTNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refreshBTNActionPerformed
@@ -383,15 +437,22 @@ public class BloodTestSchedulerGUI extends javax.swing.JFrame {
             // success message
             JOptionPane.showMessageDialog(this, "Patient added successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
 
-            //updates current queue display
-            currQueueTA.setText("");
-            for (Person patient : pQueue.getAllPatients()) {
-                currQueueTA.append(patient.toString() + "\n");
-            }
-        } catch (NumberFormatException e) {
+            // Refresh the queue text area to show the updated queue
+            refreshQueue();
+            } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(this, "Please enter a valid age.", "Error", JOptionPane.ERROR_MESSAGE);
-        }
+            }
     }//GEN-LAST:event_addPatientBTNActionPerformed
+
+    private void firstPatientBTNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_firstPatientBTNActionPerformed
+        // TODO add your handling code here:
+        Person firstUser = pQueue.peek();
+        if(firstUser != null){
+            currQueueTA.setText("First User: "+firstUser);
+        }else{
+            currQueueTA.setText("No patients in the queue");
+        }
+    }//GEN-LAST:event_firstPatientBTNActionPerformed
 
     
 
@@ -404,6 +465,7 @@ public class BloodTestSchedulerGUI extends javax.swing.JFrame {
     private javax.swing.JLabel ageLBL;
     private javax.swing.JTextField ageTF;
     private javax.swing.JTextArea currQueueTA;
+    private javax.swing.JButton firstPatientBTN;
     private javax.swing.JLabel fromHosLBL;
     private javax.swing.ButtonGroup fromHospitalBG;
     private javax.swing.JLabel gpDetailsLBL;
@@ -412,6 +474,7 @@ public class BloodTestSchedulerGUI extends javax.swing.JFrame {
     private javax.swing.JRadioButton hosYesRB;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JLabel nameLBL;
     private javax.swing.JTextField nameTF;
     private javax.swing.JButton nextPatientBTN;
@@ -419,6 +482,7 @@ public class BloodTestSchedulerGUI extends javax.swing.JFrame {
     private javax.swing.JTextArea noShowTA;
     private javax.swing.JComboBox<String> prioLevelCB;
     private javax.swing.JLabel prioLevelLBL;
+    private javax.swing.JTextArea queueTA;
     private javax.swing.JButton refreshBTN;
     private javax.swing.JButton viewAllBTN;
     // End of variables declaration//GEN-END:variables

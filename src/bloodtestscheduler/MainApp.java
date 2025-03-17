@@ -30,7 +30,6 @@ public class MainApp {
         //initialising the PatientQueue, NoShowTracker and PatientList classes
         PatientQueue pqueue = new PatientQueue();
         NoShowTracker noShowTracker = new NoShowTracker();
-        PatientList patientList = new PatientList();
 
         // queues the patients
         for (Person patient : patients) {

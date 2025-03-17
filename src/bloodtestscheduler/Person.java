@@ -88,12 +88,12 @@ public class Person {
     }
 
     @Override
-public String toString() {
-    return "Name = " + name + 
-           ", Age = " + age + 
-           ", Priority = " + priority + 
-           ", No-Show = " + (noShow ? "Yes" : "No");
-}
+    public String toString() {
+        return "Name = " + name + 
+               ", Age = " + age + 
+               ", Priority = " + priority + 
+               ", From Hospital = " + (fromHospital ? "Yes" : "No");
+    }
 
     
 }
