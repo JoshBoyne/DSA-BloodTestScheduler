@@ -48,4 +48,20 @@ public class NoShowTracker implements StackADT<Person> {
     public List<Person> getAllNoShows() {
         return new ArrayList<>(stack);
     }
+    
+    //recursion method to display all the no show patients
+    public void displayNoShowsRecursively(int index, StringBuilder sb) {
+        if (index >= stack.size()) {
+            return; // end of stack
+        }
+        sb.append(stack.get(index).toString()).append("\n"); //append patient details
+        displayNoShowsRecursively(index + 1, sb); // display next patient
+    }
+
+    //start recursion and return the result as a string
+    public String startDisplayNoShows() {
+        StringBuilder sb = new StringBuilder();
+        displayNoShowsRecursively(0, sb); //start recursion from the first element
+        return sb.toString(); //return string
+    }
 }

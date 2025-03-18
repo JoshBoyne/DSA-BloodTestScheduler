@@ -26,7 +26,7 @@ public class MainApp {
         patients.add(new Person("John Paul", 54, "Medium", "Dr. White", false, true));
         patients.add(new Person("Jane Doe", 54, "Medium", "Dr. Green", false,true));
 
-        //initialising the PatientQueue, NoShowTracker and PatientList classes
+        //initialising the PatientQueue, NoShowTracker classes
         PatientQueue pqueue = new PatientQueue();
         NoShowTracker noShowTracker = new NoShowTracker();
 
@@ -38,7 +38,7 @@ public class MainApp {
             }
         }
 
-        //initialising the GPRegistry class
+        //initialising the GPRegistry class and adding GPs
         GPRegistry gpRegistry = new GPRegistry();
         gpRegistry.add("Dr. Adams");
         gpRegistry.add("Dr. Donnelly");
@@ -51,7 +51,7 @@ public class MainApp {
         gpRegistry.add("Dr. White");
         gpRegistry.add("Dr. Green");
 
-         
+         //initialise and dispaly gui
         BloodTestSchedulerGUI myGUI = new BloodTestSchedulerGUI(pqueue, noShowTracker, gpRegistry);
         myGUI.setVisible(true);
     }

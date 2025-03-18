@@ -34,36 +34,35 @@ public class BloodTestSchedulerGUI extends javax.swing.JFrame {
         
     }
     
-    // Method to populate the GP combo box
+    //populates the GP combo box
     private void populateGPComboBox() {
-        gpDetailsCB.removeAllItems(); // Clear the combo box
+        gpDetailsCB.removeAllItems(); // clears the combo box
         for (String gp : gpRegistry.getAllGPs()) {
-            gpDetailsCB.addItem(gp); // Add each GP to the combo box
+            gpDetailsCB.addItem(gp); // adds each gp to the combo box
         }
     }
     
     //display no show patients in NoShowTA
     private void displayNoShowPatients() {
-        noShowTA.setText(""); // Clear the text area
-        for (Person noShow : noShowTracker.getAllNoShows()) {
-            noShowTA.append(noShow.toString() + "\n");
-        }
-    }
+    noShowTA.setText(""); // clears the TA
+    String noShows = noShowTracker.startDisplayNoShows(); // gets the no shows as a string
+    noShowTA.append(noShows); // appends the no shows to the TA
+}
     
-    // Method to refresh the queue text area
+    //refresh the queue text area
     private void refreshQueue() {
-        queueTA.setText(""); // Clear the text area
+        queueTA.setText(""); // clear TA
         for (Person patient : pQueue.getAllPatients()) {
-            queueTA.append(patient.getName() + "\n"); // Display patient names
+            queueTA.append(patient.getName() + "\n"); // displays the patients names
         }
     }
     
-    // Method to display the next patient in the queue
+    //displays the next patient in the queue
     private void showNextPatient() {
-        currentPatient = pQueue.dequeue(); // Remove the first patient from the queue
+        currentPatient = pQueue.dequeue(); // remove the first patient from the queue
         if (currentPatient != null) {
-            currQueueTA.setText(currentPatient.toString()); // Display detailed info of the next patient
-            refreshQueue(); // Refresh the queue text area
+            currQueueTA.setText(currentPatient.toString()); // displays the details of the next person
+            refreshQueue(); // refreshs the queue TA
         } else {
             currQueueTA.setText("No patients in queue.");
         }
@@ -327,10 +326,10 @@ public class BloodTestSchedulerGUI extends javax.swing.JFrame {
 
     private void nextPatientBTNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nextPatientBTNActionPerformed
         // TODO add your handling code here:
-        currentPatient = pQueue.dequeue(); // Remove the first patient from the queue
+        currentPatient = pQueue.dequeue(); //removes the first patient from the queue
             if (currentPatient != null) {
-                currQueueTA.setText(currentPatient.toString()); // Display detailed info of the next patient
-                refreshQueue(); // Refresh the queue text area
+                currQueueTA.setText(currentPatient.toString()); //display the detailed info of the next patient
+                refreshQueue(); // refreshes teh queue TA
             } else {
                 currQueueTA.setText("No patients in queue.");
     }
@@ -338,19 +337,19 @@ public class BloodTestSchedulerGUI extends javax.swing.JFrame {
 
     private void noShowBTNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_noShowBTNActionPerformed
         if (currentPatient != null) {
-        // Remove the current patient from the queue
-        pQueue.remove(currentPatient); // Ensure this method is implemented in PatientQueue
-        noShowTracker.push(currentPatient); // Add the patient to the no-show tracker
+        //remove the current patient from the queue
+        pQueue.remove(currentPatient); 
+        noShowTracker.push(currentPatient); //add patient to no show tracker
 
-        // Refresh the no-show text area
-        noShowTA.setText(""); // Clear the no-show text area
+        //refresh no show TA
+        noShowTA.setText(""); //clear no show TA
         for (Person noShow : noShowTracker.getAllNoShows()) {
-            noShowTA.append(noShow.toString() + "\n"); // Display no-show patients
+            noShowTA.append(noShow.toString() + "\n"); //display no show patients
         }
 
-        // Refresh the queue and current queue display
+        //refresh queue and current queue displays
         refreshQueue();
-        showNextPatient(); // Display the next patient in the queue
+        showNextPatient(); //display next patient in queue
         } else {
         JOptionPane.showMessageDialog(this, "No patient to mark as no-show.", "Error", JOptionPane.ERROR_MESSAGE);
         }
@@ -359,37 +358,36 @@ public class BloodTestSchedulerGUI extends javax.swing.JFrame {
     private void addPatientBTNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addPatientBTNActionPerformed
         // TODO add your handling code here:
         try {
-            // Get input values
+            //getting the inputs
             String name = nameTF.getText();
             int age = Integer.parseInt(ageTF.getText());
             String priority = (String) prioLevelCB.getSelectedItem();
-            String gpDetails = (String) gpDetailsCB.getSelectedItem(); // Get selected GP from combo box
+            String gpDetails = (String) gpDetailsCB.getSelectedItem(); // getting the GP from the combo box
             boolean fromHospital = hosYesRB.isSelected();
-            boolean noShow = false; // Default to false for new patients
+            boolean noShow = false; //defaults to false for new patients
 
-            // Validate input
+            // validation
             if (name.isEmpty() || gpDetails.isEmpty()) {
                 JOptionPane.showMessageDialog(this, "Please fill in all fields.", "Error", JOptionPane.ERROR_MESSAGE);
                 return;
             }
 
             // new person obj
-             // Create a new Person object
             Person newPatient = new Person(name, age, priority, gpDetails, fromHospital, noShow);
 
-            // Add the patient to the queue
+            //adds patient to queue
             pQueue.enqueue(newPatient);
 
-            // Clear input fields
+            //clear fields
             nameTF.setText("");
             ageTF.setText("");
             hosYesRB.setSelected(false);
             hosNoRB.setSelected(false);
 
-            // Display success message
+            //success
             JOptionPane.showMessageDialog(this, "Patient added successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
 
-            // Refresh the queue text area to show the updated queue
+            //refresh the queue TA to show the updated queue
             refreshQueue();
             } catch (NumberFormatException e) {
              JOptionPane.showMessageDialog(this, "Please enter a valid age.", "Error", JOptionPane.ERROR_MESSAGE);

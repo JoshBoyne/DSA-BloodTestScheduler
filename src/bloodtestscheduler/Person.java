@@ -16,6 +16,7 @@ public class Person {
     private boolean fromHospital;
     private boolean noShow;
 
+    //constructor
     public Person(String name, int age, String priority, String gpDetails, boolean fromHospital, boolean noShow) {
         this.name = name;
         this.age = age;
@@ -25,6 +26,7 @@ public class Person {
         this.noShow = noShow;
     }
 
+    //getters and setters
     public String getName() {
         return name;
     }
@@ -86,7 +88,7 @@ public class Person {
                 return 0; 
         }
     }
-
+    //tostring method
     @Override
     public String toString() {
         return "Name = " + name + 

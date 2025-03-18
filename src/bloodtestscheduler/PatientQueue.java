@@ -56,7 +56,7 @@ public class PatientQueue implements PriorityQueueADT<Person> {
         return patientList;
     }
     
-    // Method to remove a specific patient from the queue
+    //method to remove a specific patient from the queue
     public void remove(Person patient) {
         queue.remove(patient);
     }
