@@ -59,14 +59,16 @@ public class BloodTestSchedulerGUI extends javax.swing.JFrame {
     
     //displays the next patient in the queue
     private void showNextPatient() {
-        currentPatient = pQueue.dequeue(); // remove the first patient from the queue
-        if (currentPatient != null) {
-            currQueueTA.setText(currentPatient.toString()); // displays the details of the next person
-            refreshQueue(); // refreshs the queue TA
-        } else {
-            currQueueTA.setText("No patients in queue.");
-        }
+    if (pQueue.isEmpty()) {
+        currQueueTA.setText("No patients in queue.");
+        JOptionPane.showMessageDialog(this, "The queue is empty!", "Notice", JOptionPane.INFORMATION_MESSAGE);
+        return;
     }
+    
+    currentPatient = pQueue.dequeue();
+    currQueueTA.setText(currentPatient.toString());
+    refreshQueue();
+}
     
 
     @SuppressWarnings("unchecked")
@@ -337,10 +339,11 @@ public class BloodTestSchedulerGUI extends javax.swing.JFrame {
 
     private void noShowBTNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_noShowBTNActionPerformed
         if (currentPatient != null) {
-        //remove the current patient from the queue
-        pQueue.remove(currentPatient); 
-        noShowTracker.push(currentPatient); //add patient to no show tracker
-
+        noShowTracker.push(currentPatient);  // Add to no-show stack
+        displayNoShowPatients();  // Refresh no-show list
+        currentPatient = null;  // Clear the current patient
+        currQueueTA.setText("No current patient.");
+        
         //refresh no show TA
         noShowTA.setText(""); //clear no show TA
         for (Person noShow : noShowTracker.getAllNoShows()) {
@@ -349,10 +352,10 @@ public class BloodTestSchedulerGUI extends javax.swing.JFrame {
 
         //refresh queue and current queue displays
         refreshQueue();
-        showNextPatient(); //display next patient in queue
-        } else {
-        JOptionPane.showMessageDialog(this, "No patient to mark as no-show.", "Error", JOptionPane.ERROR_MESSAGE);
-        }
+        showNextPatient();
+    } else {
+        JOptionPane.showMessageDialog(this, "No patient to mark as a no-show!", "Error", JOptionPane.ERROR_MESSAGE);
+    }
     }//GEN-LAST:event_noShowBTNActionPerformed
 
     private void addPatientBTNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addPatientBTNActionPerformed
@@ -381,8 +384,8 @@ public class BloodTestSchedulerGUI extends javax.swing.JFrame {
             //clear fields
             nameTF.setText("");
             ageTF.setText("");
-            hosYesRB.setSelected(false);
-            hosNoRB.setSelected(false);
+            fromHospitalBG.clearSelection();
+
 
             //success
             JOptionPane.showMessageDialog(this, "Patient added successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
