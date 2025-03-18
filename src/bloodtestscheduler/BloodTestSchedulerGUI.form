@@ -117,7 +117,7 @@
                                   <Component id="ageTF" min="-2" pref="213" max="-2" attributes="0"/>
                                   <Component id="nameTF" min="-2" pref="213" max="-2" attributes="0"/>
                                   <Component id="prioLevelCB" alignment="0" min="-2" pref="213" max="-2" attributes="0"/>
-                                  <Component id="gpDetailsTF" alignment="0" min="-2" pref="213" max="-2" attributes="0"/>
+                                  <Component id="gpDetailsCB" min="-2" pref="213" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace max="32767" attributes="0"/>
                           </Group>
@@ -146,7 +146,7 @@
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="gpDetailsLBL" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="gpDetailsTF" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="gpDetailsCB" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
@@ -208,8 +208,6 @@
             </Component>
             <Component class="javax.swing.JTextField" name="ageTF">
             </Component>
-            <Component class="javax.swing.JTextField" name="gpDetailsTF">
-            </Component>
             <Component class="javax.swing.JRadioButton" name="hosYesRB">
               <Properties>
                 <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
@@ -248,6 +246,20 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="addPatientBTNActionPerformed"/>
               </Events>
             </Component>
+            <Component class="javax.swing.JComboBox" name="gpDetailsCB">
+              <Properties>
+                <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+                  <StringArray count="3">
+                    <StringItem index="0" value="Urgent"/>
+                    <StringItem index="1" value="Medium"/>
+                    <StringItem index="2" value="Low"/>
+                  </StringArray>
+                </Property>
+              </Properties>
+              <AuxValues>
+                <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+              </AuxValues>
+            </Component>
           </SubComponents>
         </Container>
         <Container class="javax.swing.JPanel" name="PatientQueuePanel">
@@ -279,13 +291,9 @@
                           </Group>
                           <Group type="102" attributes="0">
                               <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                              <Component id="firstPatientBTN" min="-2" pref="118" max="-2" attributes="0"/>
+                              <Component id="noShowBTN" min="-2" pref="141" max="-2" attributes="0"/>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
-                              <Component id="viewAllBTN" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace type="separate" max="-2" attributes="0"/>
-                              <Component id="nextPatientBTN" min="-2" pref="118" max="-2" attributes="0"/>
-                              <EmptySpace type="separate" max="-2" attributes="0"/>
-                              <Component id="noShowBTN" min="-2" pref="118" max="-2" attributes="0"/>
+                              <Component id="nextPatientBTN" min="-2" pref="141" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
@@ -302,10 +310,8 @@
                       </Group>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="viewAllBTN" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="nextPatientBTN" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="noShowBTN" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="firstPatientBTN" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
@@ -338,32 +344,10 @@
             </Component>
             <Component class="javax.swing.JButton" name="noShowBTN">
               <Properties>
-                <Property name="text" type="java.lang.String" value="No-Show"/>
+                <Property name="text" type="java.lang.String" value="Mark as No-Show"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="noShowBTNActionPerformed"/>
-              </Events>
-            </Component>
-            <Component class="javax.swing.JButton" name="viewAllBTN">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="View All Patients"/>
-              </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="viewAllBTNActionPerformed"/>
-              </Events>
-            </Component>
-            <Component class="javax.swing.JButton" name="firstPatientBTN">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="First Patient"/>
-                <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                  <Dimension value="[118, 23]"/>
-                </Property>
-                <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                  <Dimension value="[118, 23]"/>
-                </Property>
-              </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="firstPatientBTNActionPerformed"/>
               </Events>
             </Component>
             <Container class="javax.swing.JScrollPane" name="jScrollPane3">
@@ -404,13 +388,7 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="jScrollPane2" max="32767" attributes="0"/>
-                          <Group type="102" attributes="0">
-                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                              <Component id="refreshBTN" min="-2" pref="136" max="-2" attributes="0"/>
-                          </Group>
-                      </Group>
+                      <Component id="jScrollPane2" max="32767" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
               </Group>
@@ -420,9 +398,7 @@
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="jScrollPane2" min="-2" pref="172" max="-2" attributes="0"/>
-                      <EmptySpace max="32767" attributes="0"/>
-                      <Component id="refreshBTN" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
+                      <EmptySpace pref="35" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -443,14 +419,6 @@
                 </Component>
               </SubComponents>
             </Container>
-            <Component class="javax.swing.JButton" name="refreshBTN">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Refresh"/>
-              </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="refreshBTNActionPerformed"/>
-              </Events>
-            </Component>
           </SubComponents>
         </Container>
       </SubComponents>

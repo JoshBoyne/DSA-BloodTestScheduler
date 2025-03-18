@@ -10,7 +10,6 @@ import java.util.ArrayList;
  * @author Josh
  * Student Number - 23343338
  */
-import java.util.ArrayList;
 
 public class MainApp {
     public static void main(String[] args) {
@@ -43,6 +42,14 @@ public class MainApp {
         GPRegistry gpRegistry = new GPRegistry();
         gpRegistry.add("Dr. Adams");
         gpRegistry.add("Dr. Donnelly");
+        gpRegistry.add("Dr. Fuchs");
+        gpRegistry.add("Dr. Byrne");
+        gpRegistry.add("Dr. Sheridan");
+        gpRegistry.add("Dr. Mysterio");
+        gpRegistry.add("Dr. Pablo");
+        gpRegistry.add("Dr. Clark");
+        gpRegistry.add("Dr. White");
+        gpRegistry.add("Dr. Green");
 
          
         BloodTestSchedulerGUI myGUI = new BloodTestSchedulerGUI(pqueue, noShowTracker, gpRegistry);

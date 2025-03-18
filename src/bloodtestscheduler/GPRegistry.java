@@ -9,6 +9,7 @@ package bloodtestscheduler;
  * @author Josh
  */
 import java.util.LinkedList;
+import java.util.List;
 
 public class GPRegistry implements DLLADT<String> {
     private LinkedList<String> gpList;
@@ -37,5 +38,9 @@ public class GPRegistry implements DLLADT<String> {
         for (String gp : gpList) {
             System.out.println(gp);
         }
+    }
+    // Method to return all GPs as a list
+    public List<String> getAllGPs() {
+        return new LinkedList<>(gpList);
     }
 }
