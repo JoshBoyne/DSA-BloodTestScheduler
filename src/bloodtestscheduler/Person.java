@@ -7,6 +7,7 @@ package bloodtestscheduler;
 /**
  *
  * @author Josh
+ * Student Number - 23343338
  */
 public class Person {
     private String name;

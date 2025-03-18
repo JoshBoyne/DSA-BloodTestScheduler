@@ -13,6 +13,7 @@ import javax.swing.*;
 /**
  *
  * @author Josh
+ * Student Number - 23343338
  */
 public class BloodTestSchedulerGUI extends javax.swing.JFrame {
 
@@ -339,9 +340,9 @@ public class BloodTestSchedulerGUI extends javax.swing.JFrame {
 
     private void noShowBTNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_noShowBTNActionPerformed
         if (currentPatient != null) {
-        noShowTracker.push(currentPatient);  // Add to no-show stack
-        displayNoShowPatients();  // Refresh no-show list
-        currentPatient = null;  // Clear the current patient
+        noShowTracker.push(currentPatient);  //adds to no show stack
+        displayNoShowPatients();  // refreshes the no show list
+        currentPatient = null;  // clears the current patient
         currQueueTA.setText("No current patient.");
         
         //refresh no show TA

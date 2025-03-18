@@ -10,6 +10,7 @@ import java.util.ArrayList;
 /**
  *
  * @author Josh
+ * Student Number - 23343338
  */
 
 
@@ -56,7 +57,7 @@ public class PatientQueue implements PriorityQueueADT<Person> {
         return patientList;
     }
     
-    //method to remove a specific patient from the queue
+    //removes a specific patient from the queue
     public void remove(Person patient) {
         queue.remove(patient);
     }
