@@ -1,5 +1,5 @@
 # DSA-BloodTestScheduler
-This project implements a scheduling system for managing blood test appointments. It uses multiple data structures, including a **Priority Queue**, **Stack**, **Linked List** and **Doubly Linked List**, to efficiently handle patient management, no-show tracking and GP reigstry management
+This project implements a scheduling system for managing blood test appointments. It uses multiple data structures, including a **Priority Queue**, **Stack** and **Doubly Linked List**, to efficiently handle patient management, no-show tracking and GP reigstry management
 
 **The system features:**
 - Priority-based patient scheduling for blood tests
